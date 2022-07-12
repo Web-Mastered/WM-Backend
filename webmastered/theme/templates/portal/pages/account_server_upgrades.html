@@ -1,0 +1,97 @@
+{% extends "portal/base.html" %}
+
+{% load static theme_tags cache %}
+
+{% block title %}Server Upgrades{% endblock %}
+
+{% block heading %}Server Upgrades{% endblock %}
+
+{% block content %}
+
+    <section>
+        <div class="relative items-center x-auto">
+            <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-3 mb-6">
+                <div class="p-6 col-span-1 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        {% if not form_exists %}
+                            Submit New Request
+                        {% else %}
+                            View Existing Request
+                        {% endif %}
+                    </h1>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in upgrade_form.visible_fields %}
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                <p>{{ field.label }}</p>
+                                {{ field }}
+                                <span> {{field.errors}} </span>
+                            </label>
+                        {% endfor %}
+                        {% for hidden in upgrade_form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        <div class="col-12">
+                            {% if form_exists %}
+                                <button
+                                        type="submit"
+                                        class="
+                                            p-2
+                                            text-white
+                                            bg-red-600
+                                            border-red-600
+                                            hover:bg-red-800
+                                            hover-border-white
+                                            active:bg-red-800
+                                            active:border-white
+                                        "
+                                >
+                                    Delete
+                                </button>
+                            {% else %}
+                                <button
+                                        type="submit"
+                                        class="
+                                            p-2
+                                            text-white
+                                            bg-wm-blue
+                                            border-wm-blue
+                                            hover:bg-wm-darkblue
+                                            hover-border-white
+                                            active:bg-wm-darkblue
+                                            active:border-white
+                                        "
+                                >
+                                    Submit
+                                </button>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+                <div class="p-6 col-span-2 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        The Process
+                    </h1>
+                    <ol class="list-decimal pl-2">
+                        <li class="mb-2">
+                            A upgrade request is submitted along with any comments.
+                        </li>
+                        <li class="mb-2">
+                            The WM team recommends an upgrade tier based on website performance.
+                        </li>
+                        <li class="mb-2">
+                            A tier, date and time for the upgrade is agreed upon.
+                        </li>
+                        <li class="mb-2">
+                            The upgrade is carried out on the agreed date and time.
+                        </li>
+                        <li class="">
+                            A confirmation is sent after the upgrade completion.
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

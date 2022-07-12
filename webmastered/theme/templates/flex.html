@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags theme_tags %}
+
+{% block content %}
+
+    <section class="w-full wm-hero-container wm-flex-hero-container mb-32 pb-32 pt-16">
+        <div class="grid lg:grid-cols-2 h-full">
+            <div class="px-16 pt-16">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl py-7 leading-tight text-white wm-hero-title">
+                    {% block page_title %}
+                        {{ self.title }}
+                    {% endblock %}
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    {% block page_content %}
+        {% for block in self.content %}
+            {% include_block block %}
+        {% endfor %}
+    {% endblock %}
+
+{% endblock %}

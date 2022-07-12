@@ -1,0 +1,115 @@
+{% extends "portal/base.html" %}
+
+{% load static %}
+
+{% block title %}Support{% endblock %}
+
+{% block heading %}Support{% endblock %}
+
+{% block content %}
+
+    <section>
+        <div class="relative items-center w-full x-auto">
+            <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-3">
+                <div class="p-6 bg-gray-200 rounded-xl">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Note
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        All support has been disabled on the Client Portal and is instead available via direct
+                        communication channels such as email, WhatsApp, or another of your choice.
+                    </p>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500 mt-4">
+                        With our current client base, we think it would be far more efficient to have
+                        exclusive priority support. However, this may change in the future.
+                    </p>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500 mt-4">
+                        Please make sure that the email address registered to your WM Client Portal account is
+                        valid. You can do so by clicking <a href="{% url 'account_email' %}" class="font-bold">here</a>.
+                    </p>
+                </div>
+                <div class="p-6">
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/account_emails.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Email Support
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        Access support to resolve issues with the WM team via email.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a href="{% url 'account_billing' %}"
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="relative p-6 rounded-xl border-2 border-wm-blue">
+                    <div class="absolute flex justify-center -top-3 inset-x-0">
+                        <span class="rounded-full bg-wm-blue text-white text-xs px-3 py-1">coming soon...</span>
+                    </div>
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/priority_support.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Priority Support
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        Resolve issues and receive help quicker with Priority Support, available exclusively to
+                        clients with active Engine Cloud Support-only or Bundle plans.
+                    </p>
+                    <div class="mt-4">
+                        <div class="mt-4">
+                            <a
+                               class="inline-flex items-center mt-4
+                               font-semibold text-wm-blue
+                               lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative p-6 rounded-xl border-2 border-wm-blue">
+                    <div class="absolute flex justify-center -top-3 inset-x-0">
+                        <span class="rounded-full bg-wm-blue text-white text-xs px-3 py-1">coming soon...</span>
+                    </div>
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/support_dns.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        DNS Records
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        Allow us to take the complexities away from managing DNS records. Here, you can let us know
+                        whether to add or remove records.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="relative p-6 rounded-xl border-2 border-wm-blue">
+                    <div class="absolute flex justify-center -top-3 inset-x-0">
+                        <span class="rounded-full bg-wm-blue text-white text-xs px-3 py-1">coming soon...</span>
+                    </div>
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/website_changes.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Website Changes
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        Request additional functionalities developed into the core of your Engine CMS
+                        website, or website redesigns.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

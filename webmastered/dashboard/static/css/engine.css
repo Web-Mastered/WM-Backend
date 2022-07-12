@@ -1,0 +1,68 @@
+:root {
+    --color-primary: hsl(223, 39%, 50%);
+    --color-primary-darker: hsl(220, 100%, 28%);
+    --color-primary-dark: hsl(220, 100%, 17%);
+    --color-primary-lighter: azure;
+    --color-primary-light:	hsl(193, 65%, 64%);
+    --color-input-focus-border: hsl(220, 100%, 28%);
+}
+
+.help-info {
+    background-color: rgba(102, 196, 222, 50%);
+}
+
+.button.bicolor .icon-wrapper, .button.bicolor:before {
+    background-color: #001d56;
+}
+
+.t-inverted .u-btn-current {
+    border-color: white;
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.modal-body header {
+    background-color: rgb(0 48 143/var(--tw-bg-opacity));
+}
+
+.modal .close {
+    background-color: rgb(0 29 87/var(--tw-bg-opacity));
+    border-color: rgb(240 255 255/var(--tw-border-opacity));
+}
+
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_current, .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_default, .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box>div>div.xdsoft_current {
+    background: var(--color-primary);
+}
+
+.sidebar-loading__inner, .sidebar__inner {
+    background-color: rgb(0 48 143/var(--tw-bg-opacity));
+}
+
+.sidebar-menu-item--active {
+    background-color: rgb(0 29 87/var(--tw-bg-opacity));
+}
+
+.sidebar-footer {
+    background-color: rgb(0 29 87/var(--tw-bg-opacity));
+}
+
+.w-bg-primary {
+    background-color: rgb(0 29 87/var(--tw-bg-opacity)) !important;
+}
+
+.sidebar-sub-menu-panel {
+    background-color: rgb(0 29 87/var(--tw-bg-opacity)) !important;
+}
+
+.sidebar-main-menu .icon--submenu-header {
+    opacity: 50%;
+}
+
+.c-page-explorer {
+    background-color: rgb(0 29 87/var(--tw-bg-opacity)) !important;
+}
+
+.c-page-explorer__header {
+    background-color: rgb(0 48 143/var(--tw-bg-opacity)) !important;
+    border-color: rgb(46 31 94/var(--tw-border-opacity));
+}

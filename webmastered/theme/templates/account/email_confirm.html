@@ -1,0 +1,78 @@
+{% extends "account/base.html" %}
+
+{% load account %}
+
+{% block title %}Confirm Email Address{% endblock %}
+
+
+{% block content %}
+<h2 class="text-3xl mb-4 font-[700] text-wm-blue">Confirm Email Address</h2>
+
+{% if confirmation %}
+
+{% user_display confirmation.email_address.user as user_display %}
+
+<p>
+    <em>Hi {{ confirmation.email_address.user.first_name }},</em>
+
+    <br>
+
+    Please confirm that
+    <a href="mailto:{{ confirmation.email_address.email }}" class="text-wm-blue">
+        {{ confirmation.email_address.email }}
+    </a> is an e-mail address that you'd like to add to your account.
+</p>
+
+<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+{% csrf_token %}
+    <button type="submit"
+        class="
+        rounded
+        bg-wm-blue
+        text-white
+        p-2 mt-7
+        transition
+        duration-300
+        font-paragraph
+        border-2
+        border-transparent
+        hover:bg-wm-darkblue
+        hover:border-white
+        active:bg-wm-darkblue
+        active:text-white
+        active:border-white
+                    ">Confirm</button>
+</form>
+
+{% else %}
+
+{% url 'account_email' as email_url %}
+
+<p>
+    This email confirmation link has expired or is invalid. If you'd like to issue a new email confirmation request,
+    please click the button below. You'll be asked to sign in again, if your email hasn't been confirmed, you'll be
+    sent another confirmation email.
+</p>
+
+<button type="submit"
+        class="
+        rounded
+        bg-wm-blue
+        text-white
+        p-2 mt-7
+        transition
+        duration-300
+        font-paragraph
+        border-2
+        border-transparent
+        hover:bg-wm-darkblue
+        hover:border-white
+        active:bg-wm-darkblue
+        active:text-white
+        active:border-white
+        "
+onclick="location.href='{{ email_url }}'">Issue New Link</button>
+
+{% endif %}
+
+{% endblock %}

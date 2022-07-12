@@ -1,0 +1,86 @@
+{% load static tailwind_tags wagtailuserbar wagtailimages_tags theme_tags portal_tags analytic_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<title>
+			WM Portal - {% block title %}{% endblock %}
+		</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        {% image settings.dashboard.WebsiteSettings.site_icon width-180 format-png as favicon_180 %}
+        {% image settings.dashboard.WebsiteSettings.site_icon width-32 format-png as favicon_32 %}
+        {% image settings.dashboard.WebsiteSettings.site_icon width-16 format-png as favicon_16 %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ favicon_180.url }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ favicon_32.url }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ favicon_16.url }}">
+
+		{% tailwind_preload_css %}
+		{% tailwind_css %}
+
+        {% generate_plausible_js %}
+        {% generate_sentry_js %}
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <script defer src="https://unpkg.com/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    	<script src="//unpkg.com/alpinejs" defer></script>
+	</head>
+
+	<body
+            x-data="{navbarModalOpen: false}"
+            :class="navbarModalOpen ? 'overflow-hidden' : ''"
+            class="
+                prose-headings:font-heading
+                prose-p:font-paragraph
+                prose-a:font-paragraph
+                prose-em:not-italic
+                prose-em:font-[700]
+            "
+    >
+
+        <div class="w-full h-full fixed grid grid-cols-1 md:grid-cols-2">
+            <div class="h-full wm-account-background flex flex-col justify-center place-items-center gap-y-6">
+                {% image settings.dashboard.WebsiteSettings.lightmode_logo width-200 format-png as lightmode_logo_100 %}
+                <img class="object-cover" src="{{ lightmode_logo_100.url }}" alt="" width="100">
+                <script>
+                    function romanize (num) {
+                        if (!+num)
+                            return false;
+                        var digits = String(+num).split(""),
+                            key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+                                "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+                                "","I","II","III","IV","V","VI","VII","VIII","IX"],
+                            roman = "",
+                            i = 3;
+                        while (i--)
+                            roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+                        return Array(+digits.join("") + 1).join("M") + roman;
+                    }
+                    var year = romanize(new Date().getFullYear())
+                </script>
+                <h1 class="text-3xl font-[700] text-wm-darkblue">
+                    Client Portal
+                </h1>
+                <p>
+                    &#169; WM Ltd. <script type="text/javascript">document.write(year)</script>
+                </p>
+            </div>
+            <div class="my-auto h-100 px-12">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        {% include 'partials/messages.html' %}
+
+	</body>
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+	<script src="{% static 'js/script.js' %}"></script>
+</html>

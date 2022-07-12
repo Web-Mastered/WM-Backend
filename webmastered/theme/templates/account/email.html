@@ -1,0 +1,154 @@
+{% extends "portal/base.html" %}
+
+{% block title %}
+    Email Address
+{% endblock %}
+
+{% block heading %}
+    Email Address
+{% endblock %}
+
+{% block content %}
+    <section class="w-full z-[5000000]">
+        <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600">
+            Your Email Addresses
+        </h1>
+        {% if user.emailaddress_set.all %}
+            <form action="{% url 'account_email' %}" class="email_list" method="post">
+                {% csrf_token %}
+                <fieldset class="blockLabels p-6 rounded-xl border-2 border-wm-blue">
+
+                    {% for emailaddress in user.emailaddress_set.all %}
+                        <div class="ctrlHolder mb-4">
+                            <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+                                <input id="email_radio_{{forloop.counter}}" type="radio" name="email" class="form-radio" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+
+                                {{ emailaddress.email }}
+                                {% if emailaddress.verified %}
+                                    <span class="align-super text-xs verified rounded-3xl bg-green-600 text-white p-1">Verified</span>
+                                {% else %}
+                                    <span class="align-super text-xs unverified rounded-3xl bg-red-600 text-white p-1">Unverified</span>
+                                {% endif %}
+                                {% if emailaddress.primary %}
+                                    <span class="align-super text-xs primary rounded-3xl bg-wm-blue text-white p-1">Primary</span>
+                                {% endif %}
+                            </label>
+                        </div>
+                    {% endfor %}
+
+                    <div class="buttonHolder">
+                      <button
+                              class="
+                                rounded
+                                text-white
+                                bg-wm-blue
+                                p-2 mt-7
+                                transition
+                                duration-300
+                                font-paragraph
+                                border-2
+                                border-wm-blue
+                                hover:bg-wm-darkblue
+                                hover:border-white
+                                active:bg-wm-darkblue
+                                active:border-white"
+                              type="submit" name="action_primary">Make Primary</button>
+                      <button
+                              class="
+                                rounded
+                                bg-white
+                                p-2 mt-7
+                                transition
+                                duration-300
+                                font-paragraph
+                                border-2
+                                border-wm-blue
+                                hover:bg-wm-darkblue
+                                hover:text-white
+                                hover:border-white
+                                active:bg-wm-darkblue
+                                active:text-white
+                                active:border-white"
+                              type="submit" name="action_send" >Re-send Verification</button>
+                      <button
+                              class="
+                                rounded
+                                bg-white
+                                p-2 mt-7
+                                transition
+                                duration-300
+                                font-paragraph
+                                border-2
+                                border-red-600
+                                hover:bg-red-600
+                                hover:text-white
+                                hover:border-white
+                                active:bg-red-600
+                                active:text-white
+                                active:border-white
+                              "
+                              type="submit" name="action_remove" >Remove</button>
+                    </div>
+
+                </fieldset>
+            </form>
+        {% else %}
+            <p>
+                <strong>Warning</strong>
+                You currently do not have any e-mail address set up. You should really add an email address, so you can
+                receive notifications, reset your password, etc.
+            </p>
+
+        {% endif %}
+
+        {% if can_add_email %}
+            <h2 class="mx-auto mt-12 mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600">
+                Add An Email
+            </h2>
+
+            <form method="post" action="{% url 'account_email' %}" class="add_email">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="">
+                        <label for="{{ field.id_for_label }}" class="form-label">
+                            {{ field }}
+                        </label>
+                    </div>
+                {% endfor %}
+                <button
+                        name="action_add"
+                        type="submit"
+                        class="
+                            rounded
+                            text-white
+                            bg-wm-blue
+                            p-2 mt-7
+                            transition
+                            duration-300
+                            font-paragraph
+                            border-2
+                            border-wm-blue
+                            hover:bg-wm-darkblue
+                            hover:border-white
+                            active:bg-wm-darkblue
+                            active:border-white
+                        "
+                >Add Email</button>
+            </form>
+        {% endif %}
+
+        <script type="text/javascript">
+            (function() {
+              var message = "Do you really want to remove the selected e-mail address?";
+              var actions = document.getElementsByName('action_remove');
+              if (actions.length) {
+                actions[0].addEventListener("click", function(e) {
+                  if (! confirm(message)) {
+                    e.preventDefault();
+                  }
+                });
+              }
+            })();
+        </script>
+    </section>
+{% endblock %}

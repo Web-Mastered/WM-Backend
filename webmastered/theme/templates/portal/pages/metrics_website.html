@@ -1,0 +1,124 @@
+{% extends "portal/base.html" %}
+
+{% load static theme_tags cache %}
+
+{% block title %}Website Metrics{% endblock %}
+
+{% block heading %}Website Metrics{% endblock %}
+
+{% block extra_css %}
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <section class="w-full">
+        <div class="relative items-center x-auto">
+            {% cache 1800 wm-website-metrics-overview request.user.username %}
+                <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600">
+                    Today's Overview
+                </h1>
+                {% epoch_to_datetime httpRequests1dGroups.epoch as httpRequests1dGroups_epoch %}
+                <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-4 mb-6">
+                    <div class="p-6 rounded-xl border-2 border-wm-blue">
+                        <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                            Page Views
+                        </h1>
+                        <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                            {{ httpRequests1dGroups.tot_pageViews }}
+                        </p>
+                        <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                            Updated : {{ httpRequests1dGroups_epoch|date:"h:i a" }}
+                        </p>
+                    </div>
+                    <div class="p-6 rounded-xl border-2 border-wm-blue">
+                        <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                            Unique Visitors
+                        </h1>
+                        <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                            {{ httpRequests1dGroups.unique_ip_count }}
+                        </p>
+                        <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                            Updated : {{ httpRequests1dGroups_epoch|date:"h:i a" }}
+                        </p>
+                    </div>
+                    <div class="p-6 rounded-xl border-2 border-wm-blue">
+                        <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                            Total Requests
+                        </h1>
+                        <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                            {{ httpRequests1dGroups.tot_requests }}
+                        </p>
+                        <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                            Updated : {{ httpRequests1dGroups_epoch|date:"h:i a" }}
+                        </p>
+                    </div>
+                    <div class="p-6 rounded-xl border-2 border-wm-blue">
+                        <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                            Total Threats
+                        </h1>
+                        <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                            {{ httpRequests1dGroups.tot_threats }}
+                        </p>
+                        <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                            Updated : {{ httpRequests1dGroups_epoch|date:"h:i a" }}
+                        </p>
+                    </div>
+                </div>
+                <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-8 mb-6">
+                    <div class="p-6 rounded-xl border-2 border-b-0 lg:border-r-0 lg:border-b-2 border-wm-blue lg:col-span-5">
+                        <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                            Visitor Countries
+                        </h1>
+                        <div class="">
+                            {{ httpRequests1dChoroplethMap | safe }}
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-xl border-2 border-t-0 lg:border-l-0 lg:border-t-2 border-wm-blue lg:col-span-3 overflow-x-auto">
+                        <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                            {{ httpRequests1hGroupsTables.0 | safe }}
+                        </p>
+                    </div>
+                </div>
+
+            {% endcache %}
+
+            {% cache 12600 wm-website-metrics-historical-requests request.user.username %}
+                <h1 class="mx-auto mt-20 mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600">
+                    Historical
+                </h1>
+                <div class="grid w-full grid-cols-1 lg:grid-cols-2 gap-6 mx-auto mb-6">
+                    {% for table in httpRequests1hGroupsTables|slice:"1:" %}
+                        <div class="p-6 rounded-xl border-2 border-wm-blue lg:col-span-1 overflow-x-auto">
+                            <div class="">
+                                {{ table | safe }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endcache %}
+
+            {% cache 12600 wm-website-metrics-firewall-events request.user.username %}
+                <h1 class="mx-auto mt-20 mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600">
+                    Firewall Events
+                </h1>
+                <div class="grid w-full grid-cols-1 gap-6 mx-auto mb-6">
+                    <div class="p-6 rounded-xl border-2 border-wm-blue lg:col-span-1 overflow-x-auto">
+                        <div class="">
+                            {{ firewallEventsHistoryTable | safe }}
+                        </div>
+                    </div>
+                </div>
+            {% endcache %}
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js" integrity="sha256-cHVO4dqZfamRhWD7s4iXyaXWVK10odD+qp4xidFzqTI=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+    <script>
+    </script>
+{% endblock %}

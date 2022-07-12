@@ -1,0 +1,41 @@
+{% load theme_tags business_tags %}
+
+<section class="w-full wm-container mb-12 prose-a:text-wm-blue prose-a:italic">
+    <div class="grid grid-cols-12 py-20">
+        <div class="col-span-1 md:col-span-2"></div>
+        <div class="col-span-10 md:col-span-8">
+            {% if self.heading %}
+                <div class="md:px-12 pb-6">
+                    {% wm_richtext self.heading 'h2' 'text-3xl pb-4 font-[700] text-wm-blue' %}
+                </div>
+            {% endif %}
+            <div x-data class="md:px-12">
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 lg:gap-x-8 gap-y-6 sm:gap-y-8 lg:gap-y-12">
+                    {% get_staff_list as staff_list %}
+                    {% for staff in staff_list %}
+                        <!-- person - start -->
+                        <div class="flex flex-col sm:flex-row items-center gap-2 md:gap-4">
+                            <div class="w-24 md:w-32 h-24 md:h-32 bg-gray-100 rounded-full overflow-hidden shadow-lg">
+                                {% if staff.user.wagtail_userprofile.avatar %}
+                                    <img src="{{ staff.user.wagtail_userprofile.avatar.url }}" loading="lazy" alt="{{ staff.user.first_name }} {{ staff.user.last_name }}" class="w-full h-full object-cover object-center" />
+                                {% else %}
+                                    <div class="w-full h-full object-cover object-center"></div>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="text-wm-blue md:text-lg font-bold text-center sm:text-left">{{ staff.user.first_name }} {{ staff.user.last_name }}</div>
+                                <p class="text-gray-500 text-sm md:text-base text-center sm:text-left">
+                                    {% for role in staff.roles.all %}
+                                        {{ role }} {% if not forloop.last %}/{% endif %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                        <!-- person - end -->
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 md:col-span-2"></div>
+    </div>
+</section>

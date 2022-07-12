@@ -1,0 +1,30 @@
+{% extends "portal/base.html" %}
+
+{% load static theme_tags cache %}
+
+{% block title %}Billing{% endblock %}
+
+{% block heading %}Billing{% endblock %}
+
+{% block content %}
+
+    <section>
+        <div class="relative items-center x-auto">
+            <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-5 mb-6">
+                <div class="p-6 rounded-xl border-2 border-wm-blue">
+{#                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">#}
+{#                        Location#}
+{#                    </h1>#}
+{#                    <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right">#}
+{#                        {{ region.data }}#}
+{#                    </p>#}
+{#                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">#}
+{#                        {% epoch_to_datetime region.timestamp as region_datetime %}#}
+{#                        Updated : {{ region_datetime|date:"h:i a" }}#}
+{#                    </p>#}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

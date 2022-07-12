@@ -1,0 +1,19 @@
+{% load theme_tags %}
+
+<section class="w-full wm-container-light mb-32 prose-a:text-wm-blue prose-a:italic">
+    <div class="grid grid-cols-12">
+        <div class="col-span-1 md:col-span-2"></div>
+        <div class="col-span-10 md:col-span-8">
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 md:col-span-6 md:px-12">
+                    {% wm_richtext self.heading 'h2' 'text-3xl pb-4 text-wm-blue font-[700]' %}
+                    {% wm_richtext self.subheading 'h3' 'text-2xl font-extralight' %}
+                </div>
+                <div class="col-span-12 md:col-span-6 md:px-12">
+                    {% wm_richtext self.content 'p' 'text-xl font-extralight' %}
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 md:col-span-2"></div>
+    </div>
+</section>

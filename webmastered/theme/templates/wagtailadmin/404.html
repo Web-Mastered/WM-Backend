@@ -1,0 +1,28 @@
+{% extends "wagtailadmin/admin_base.html" %}
+{% load wagtailadmin_tags wagtailcore_tags %}
+{% block titletag %}Error 404: Page not found{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+
+    <link rel="stylesheet" href="{% versioned_static 'wagtailadmin/css/layouts/404.css' %}" />
+{% endblock %}
+
+{% block furniture %}
+    <main class="page404__bg">
+        <div class="w-w-full w-h-full w-max-w-6xl w-mx-auto w-flex w-items-center w-justify-center">
+
+            <div class="page404__text-container">
+                <h1 class="page404__header">
+                    Error 404
+                </h1>
+
+                <p class="page404__text">
+                    The requested page could not be found
+                </p>
+
+                <a class="page404__button button" href="{% url 'wagtailadmin_home' %}">Go to Engine CMS admin</a>
+            </div>
+        </div>
+    </main>
+{% endblock %}

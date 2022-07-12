@@ -1,0 +1,248 @@
+{% load static tailwind_tags wagtailuserbar portal_tags analytic_tags wagtailimages_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<title>
+			WM Portal - {% block title %}{% endblock %}
+		</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        {% image settings.dashboard.WebsiteSettings.site_icon width-180 format-png as favicon_180 %}
+        {% image settings.dashboard.WebsiteSettings.site_icon width-32 format-png as favicon_32 %}
+        {% image settings.dashboard.WebsiteSettings.site_icon width-16 format-png as favicon_16 %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ favicon_180.url }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ favicon_32.url }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ favicon_16.url }}">
+
+		{% tailwind_preload_css %}
+		{% tailwind_css %}
+        {% generate_plausible_js %}
+        {% generate_sentry_js %}
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+        {% block extra_css %}{% endblock %}
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <script defer src="https://unpkg.com/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    	<script src="//unpkg.com/alpinejs" defer></script>
+	</head>
+
+	<body
+            class="
+                prose-headings:font-heading
+                prose-p:font-paragraph
+                prose-a:font-paragraph
+                prose-em:not-italic
+                prose-em:font-[700]
+            "
+            x-data="{ feedbackModalOpen : false, navbarExpanded : false }"
+            :class="feedbackModalOpen ? 'overflow-hidden' : ''"
+            x-cloak
+    >
+
+        <aside
+                class="fixed z-10 pb-3 px-6 w-full flex flex-col justify-between h-screen
+                border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]"
+                :class="navbarExpanded ? 'pt-16' : 'ml-[-100%] top-0'"
+        >
+            <div>
+                <div class="mt-8 text-center">
+                    <div class="flex w-24 h-24 m-auto rounded-full lg:w-28 lg:h-28 border-2 border-black justify-center place-items-center">
+                        <i class="fa-solid fa-user h-100 align-middle text-3xl"></i>
+                    </div>
+                    <h5 class="hidden mt-4 text-lg font-semibold text-gray-600 lg:block font-paragraph">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </h5>
+                    <span class="hidden text-md text-gray-400 lg:block font-paragraph">
+                        {% get_client_company_name %}
+                    </span>
+                </div>
+
+                <ul class="space-y-2 tracking-wide mt-8">
+                    <li>
+                        <a href="{% url 'portal_homepage' %}"
+                           class="wm-sidebar-link px-4 py-3
+                           flex items-center space-x-4 rounded-xl
+                           border-2 border-white hover:border-wm-blue"
+                        >
+                            <i class="fa-solid fa-house"></i>
+                            <span class="-mr-1 font-medium">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'portal_metrics' %}"
+                           class="wm-sidebar-link px-4 py-3
+                           flex items-center space-x-4 rounded-xl
+                           border-2 border-white hover:border-wm-blue"
+                        >
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span class="group-hover:text-gray-700">Metrics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'portal_account' %}"
+                           class="wm-sidebar-link px-4 py-3
+                           flex items-center space-x-4 rounded-xl
+                           border-2 border-white hover:border-wm-blue"
+                        >
+                            <i class="fa-solid fa-address-card"></i>
+                            <span class="group-hover:text-gray-700">Account</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'portal_support' %}"
+                           class="wm-sidebar-link px-4 py-3
+                           flex items-center space-x-4 rounded-xl
+                           border-2 border-white hover:border-wm-blue"
+                        >
+                            <i class="fa-regular fa-life-ring"></i>
+                            <span class="group-hover:text-gray-700">Support</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="px-6 -mx-6 pt-4 flex justify-between items-center border-t bg-white">
+                <button class="
+                px-4 py-3
+                flex items-center space-x-4
+                rounded-md text-gray-600 group"
+                onclick="location.href='{% url 'account_logout' %}'"
+                >
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span class="group-hover:text-gray-700">Logout</span>
+                </button>
+            </div>
+        </aside>
+
+
+        <section
+                class="fixed z-[50000] bg-opacity-80 wm-portal-user-feedback h-screen w-screen bg-wm-darkblue flex justify-center"
+                x-show="feedbackModalOpen"
+                x-transition
+        >
+            <div class="h-3/4 w-2/3 bg-white my-auto p-6 rounded-xl overflow-auto">
+                <div class="wm-portal-user-feedback-heading flex flex-row">
+                    <a href="{% url 'portal_homepage' %}" title="home" class="flex flex-row gap-x-4 mr-auto">
+                        <h5 class="text-xl text-gray-600 font-medium lg:block font-paragraph my-auto">
+                            Client Portal
+                            <span class="align-super text-xs">v{% client_portal_version %}</span>
+                        </h5>
+                    </a>
+
+                    <button type="button" class="w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200 ml-auto" @click="feedbackModalOpen = false">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="pt-6">
+                    <div class="mb-24">
+                        <h2 class="text-2xl mb-4">Welcome to the WM Client Portal.</h2>
+                        <p class="mb-2">
+                            We've developed the Client Portal to help you manage your account with Web Mastered. Everything
+                            from monitoring your website and server to receiving support can be done through here. We work
+                            hard to improve the Client Portal to make it better for our clients, by adding new features or
+                            by improving existing features. We very highly regard the feedback that we get from our clients
+                            regarding the Client Portal. You can send us feedback by clicking the button below.
+                        </p>
+                        <button
+                                type="button"
+                                class="
+                                rounded
+                                bg-wm-blue
+                                p-2 mt-7
+                                transition
+                                duration-300
+                                active:bg-wm-darkblue
+                                font-paragraph
+                                border-2
+                                text-white
+                                border-wm-blue
+                                hover:bg-wm-darkblue
+                                hover:border-white
+                                active:bg-wm-darkblue
+                                active:border-white
+                                "
+                                onclick="location.href='mailto:{{ settings.dashboard.WebsiteSettings.business_email }}?subject=WM Client Portal Feedback'"
+                        >
+                            Send Feedback
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <h2 class="text-xl mb-4">Version History</h2>
+                        <div class="mb-4">
+                            <h4>
+                                v2.0.0
+                            </h4>
+                            <ul class="list-disc">
+                                <li>Complete UI redesign</li>
+                                <li>Server metrics disk usage accuracy improved</li>
+                                <li>Server metrics memory usage accuracy improved</li>
+                                <li>Additional server metrics displayed</li>
+                                <li>Bug fixes</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4>
+                                v1.0.0
+                            </h4>
+                            <ul class="list-disc">
+                                <li>Initial design</li>
+                                <li>Basic server metrics API</li>
+                                <li>Basic website metrics API</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="ml-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
+            <div class="sticky top-0 h-16 border-b bg-white lg:py-2.5 z-[5000]">
+                <div class="px-6 flex items-center justify-between space-x-4 2xl:container h-full">
+                    <a href="{% url 'portal_homepage' %}" title="home" class="flex flex-row gap-x-4">
+                        <img src="{% static 'img/wm-logo-light.png' %}" class="w-16 object-cover hidden sm:block" alt="Web Mastered Logo">
+                        <h5 class="text-xl text-gray-600 font-medium lg:block font-paragraph my-auto">
+                            Client Portal
+                            <span class="align-super text-xs">v{% client_portal_version %}</span>
+                        </h5>
+                    </a>
+                    <h5 hidden class="text-2xl text-gray-600 font-medium lg:block font-paragraph">{% block heading %}{% endblock %}</h5>
+
+                    <div class="space-x-4 static">
+                        <button type="button" class="w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200" @click="feedbackModalOpen = true">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </button>
+                        <button type="button" class="w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200 lg:hidden" @click="navbarExpanded = !navbarExpanded">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-6 pt-6 2xl:container">
+                <div class="flex justify-center items-center">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        {% include 'partials/messages.html' %}
+
+    <div class="hidden border-wm-blue bg-gradient-to-r from-wm-blue to-wm-lightblue"></div>
+
+	</body>
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+	<script src="{% static 'js/portal.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</html>

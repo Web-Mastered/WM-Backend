@@ -1,0 +1,34 @@
+{% load theme_tags %}
+
+<section class="w-full wm-container-light mb-32 prose-a:text-wm-blue prose-a:italic">
+    <div class="grid grid-cols-12">
+        <div class="col-span-1 md:col-span-2"></div>
+        <div class="col-span-10 md:col-span-8">
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 xl:col-span-6 xl:px-12">
+                    {% wm_richtext self.heading 'h2' 'text-3xl pb-4 text-wm-blue font-[700]' %}
+                    {% wm_richtext self.subheading 'p' 'text-xl font-extralight' %}
+                </div>
+                <div class="col-span-12 xl:col-span-6 xl:px-12">
+                    <div class="wm-accordion grid gap-2 grid-cols-1" x-data="{selected:null}">
+
+                        {% for accordion in self.content %}
+                            <button type="button" class="flex text-left bg-white drop-shadow p-3 w-full" @click="selected !== {{ forloop.counter }} ? selected = {{ forloop.counter }} : selected = null">
+                                {% wm_richtext accordion.title 'h2' 'text-xl my-auto text-wm-blue' %}
+                                <div class="my-auto ml-auto bg-wm-blue px-3 py-1">
+                                    <h2 class="text-white text-lg transform-gpu duration-700" :class="selected == {{ forloop.counter }} ? 'rotate-45' : 'rotate-0'">+</h2>
+                                </div>
+                            </button>
+                            <div class="relative overflow-hidden transition-all max-h-0 duration-700" x-ref="container{{ forloop.counter }}" x-bind:style="selected == {{ forloop.counter }} ? 'max-height: ' + $refs.container{{ forloop.counter }}.scrollHeight + 'px' : ''">
+                                <div class="p-6">
+                                    {% wm_richtext accordion.content 'p' 'text-lg font-extralight text-justify' %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-1 md:col-span-2"></div>
+    </div>
+</section>

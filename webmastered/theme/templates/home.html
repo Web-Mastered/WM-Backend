@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags theme_tags %}
+
+{% block content %}
+
+<section class="w-full min-h-screen wm-hero-container wm-home-hero-container pb-32 pt-16">
+    <div class="grid lg:grid-cols-2 h-full">
+        <div class="px-16 pt-16">
+            {% wm_richtext self.hero_title 'h1' 'text-4xl sm:text-5xl md:text-6xl py-7 leading-tight text-white font-light wm-hero-title prose-p:font-heading' %}
+            {% wm_richtext self.hero_subtitle 'p' 'text-2xl sm:text-3xl md:text-4xl leading-tight font-extralight py-7 text-white font-light wm-hero-subtitle' %}
+            <button
+                    type="button"
+                    class="
+                    rounded
+                    bg-white
+                    p-2 mt-7
+                    transition
+                    duration-300
+                    active:wm-hero-btn-active
+                    font-paragraph
+                    border-2
+                    border-transparent
+                    hover:bg-wm-darkblue
+                    hover:text-white
+                    hover:border-white
+                    active:bg-wm-darkblue
+                    active:text-white
+                    active:border-white
+                    "
+                    onclick="location.href='{{ self.hero_button_page.url }}'"
+            >
+                {% wm_richtext self.hero_button_text 'span' '' %}
+            </button>
+        </div>
+    </div>
+    <div class="wm-home-bg-blender absolute w-full bg-white h-3 -bottom-1">
+        <div class="hidden">
+            This div is used to blend the background from the homepage hero with the white background
+            of the rest of the page.
+        </div>
+    </div>
+</section>
+
+
+{% for block in self.content %}
+    {% include_block block %}
+{% endfor %}
+
+{% endblock %}

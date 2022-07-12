@@ -1,0 +1,24 @@
+{% load wagtailimages_tags theme_tags %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "{{ settings.dashboard.WebsiteSettings.company_name }}",
+  "legalName": "{{ settings.dashboard.WebsiteSettings.company_legal_name }}",
+  {% image settings.dashboard.WebsiteSettings.lightmode_logo format-png as logo %}
+  "logo": "{{ logo.full_url }}",
+  "slogan": "{{ settings.dashboard.WebsiteSettings.company_slogan }}",
+  "url": "{{ self.full_url }}",
+  "email": "{{ settings.dashboard.WebsiteSettings.business_email }}",
+{#  "description": "{{ settings.dashboard.WebsiteSettings.company_description }}",#}
+  "description": "{{ self.search_description }}",
+  "sameAs": [
+    {% get_social_media_account as social_media_accounts %}
+    {% for account in social_media_accounts %}
+        "{{ account.account_url }}",
+    {% endfor %}
+    "{% settings_value "WAGTAILADMIN_BASE_URL" %}"
+  ]
+}
+</script>

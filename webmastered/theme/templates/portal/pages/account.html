@@ -1,0 +1,90 @@
+{% extends "portal/base.html" %}
+
+{% load static %}
+
+{% block title %}Account{% endblock %}
+
+{% block heading %}Account{% endblock %}
+
+{% block content %}
+
+    <section>
+        <div class="relative items-center w-full x-auto">
+            <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-3">
+                <div class="p-6">
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/account_emails.jpeg' %}" alt="emails">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Emails
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        Keep your email contact address updated to not miss any important messages from the WM team and
+                        the WM Client Portal.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a href="{% url 'account_email' %}"
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/account_password.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Password
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        Keep your WM Client Portal account safe by regularly changing your password to something new and
+                        unique.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a href="{% url 'account_change_password' %}"
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/account_billing.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Billing
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        View and edit billing related information such as payment methods, payment postal address, and
+                        billing histories.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a href="{% url 'account_billing' %}"
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/server_metrics.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Server Upgrades
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        Keep up with the growth of your business by upgrading to more powerful servers. You can request
+                        for a server upgrade here.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a href="{% url 'account_server_upgrades' %}"
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

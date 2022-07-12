@@ -1,0 +1,80 @@
+{% load static tailwind_tags wagtailuserbar wagtailimages_tags analytic_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<title>
+			{% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+		</title>
+
+        {% image settings.dashboard.WebsiteSettings.site_icon width-180 format-png as favicon_180 %}
+        {% image settings.dashboard.WebsiteSettings.site_icon width-32 format-png as favicon_32 %}
+        {% image settings.dashboard.WebsiteSettings.site_icon width-16 format-png as favicon_16 %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ favicon_180.url }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ favicon_32.url }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ favicon_16.url }}">
+
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="title" content="{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}">
+        <meta name="description" content="{{ self.search_description }}">
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ self.full_url }}">
+        <meta property="og:title" content="{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}">
+        <meta property="og:description" content="{{ self.search_description }}">
+        {% image settings.dashboard.WebsiteSettings.lightmode_logo format-png as logo %}
+        <meta property="og:image" content="{{ logo.full_url }}">
+
+
+        {% include 'partials/schema.html' %}
+
+		{% tailwind_preload_css %}
+		{% tailwind_css %}
+
+        {% generate_plausible_js %}
+        {% generate_sentry_js %}
+
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    	<script defer src="https://unpkg.com/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+    	<script src="//unpkg.com/alpinejs" defer></script>
+	</head>
+
+	<body
+            x-data="{navbarModalOpen: false}"
+            :class="navbarModalOpen ? 'overflow-hidden' : ''"
+            class="
+                prose-headings:font-heading
+                prose-p:font-paragraph
+                prose-a:font-paragraph
+                prose-em:not-italic
+                prose-em:font-[700]
+            "
+    >
+		{% wagtailuserbar 'bottom-left' %}
+
+        {% include 'partials/header_nav.html' %}
+
+		{% block content %}{% endblock %}
+
+        {% include 'partials/messages.html' %}
+		{% include 'partials/footer_nav.html' %}
+
+	</body>
+	<script src="{% static 'js/script.js' %}"></script>
+</html>

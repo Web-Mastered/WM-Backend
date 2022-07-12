@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags theme_tags %}
+
+{% block content %}
+
+    <section class="w-full wm-hero-container wm-flex-hero-container mb-12 pb-32 pt-16">
+        <div class="grid lg:grid-cols-2 h-full">
+            <div class="px-16 pt-16">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl py-7 leading-tight text-white wm-hero-title">
+                    {{ self.title }}
+                </h1>
+            </div>
+        </div>
+    </section>
+    <div class="hidden resize-none w-full font-paragraph border-0 border-b-2 focus:ring-0 placeholder:text-gray-400 border-gray-300 focus:border-wm-blue text-2xl"></div>
+    <section class="w-full wm-container mb-12 prose-a:text-wm-blue prose-a:italic">
+        <div class="grid grid-cols-12">
+            <div class="col-span-1 md:col-span-2"></div>
+            <div class="col-span-10 md:col-span-8">
+                <div class="grid grid-cols-2 gap-24">
+                    <div class="col-span-2 lg:col-span-1">
+                        <h2 class="text-5xl mb-8">Get in touch with us.</h2>
+                        <p class="text-2xl mb-16">
+                            For those who have a vision that needs turning into a reality, start here.
+                        </p>
+                        <p class="text-base mb-8">
+                            Your privacy is safe with us. This form collects your entered fields safely, complying
+                            with legal guidelines. You can read our
+                            <a href="{{ settings.dashboard.WebsiteSettings.privacy_policy_page.url }}">
+                                Privacy Policy
+                            </a>
+                            for more details on how we protect and manage your data.
+                        </p>
+                        <p class="text-base">
+                            Optionally, you can choose to join the mailing list where we send the latest updates and
+                            special limited-time offers and discounts. You can unsubscribe at any time with ease, and
+                            we won't spam.
+                        </p>
+                    </div>
+                    <div class="col-span-2 lg:col-span-1">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                {% if field.field.widget.input_type == 'checkbox' %}
+                                    <div class="flex flex-col {% if not field.name == 'protect' %}mb-6{% endif %}">
+                                        <label for="{{ field.id_for_label }}" class="form-label inline-flex items-center">
+                                            {{ field }}
+                                            {% if not field.name == 'protect' %}
+                                                <span class="font-heading text-base text-wm-darkblue ml-2 w-full">
+                                                    {{ field.label }}
+                                                </span>
+                                            {% endif %}
+                                        </label>
+                                        {% if field.errors %}
+                                            <span class="font-paragraph text-sm text-red-600 w-full {% if field.name == 'protect' %}mb-6{% endif %}">
+                                                {{ field.errors }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="flex flex-col mb-6">
+                                        <label for="{{ field.id_for_label }}" class="form-label block">
+                                            <span class="font-heading text-base text-wm-darkblue">{{ field.label }}</span>
+                                            <br>
+                                            <div class="mt-4">
+                                                {{ field }}
+                                            </div>
+                                            {% if field.errors %}<span class="font-heading text-base text-wm-darkblue">{{ field.errors }}</span>{% endif %}
+                                        </label>
+                                        {% if field.errors %}
+                                            <span class="font-paragraph text-sm text-red-600 w-full">
+                                                {{ field.errors }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <button
+                                    type="submit"
+                                    class="
+                                        px-3 py-1
+                                        bg-wm-blue text-white
+                                        text-xl font-heading
+                                        border-2 border-wm-blue
+                                        transition duration-300
+                                        hover:bg-wm-darkblue hover:drop-shadow-2xl
+                                        active:bg-wm-darkblue active:border-white active:rounded-sm
+                                    "
+                            >
+                                Send
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            $(".wm-contact-message").each(function () {
+              this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
+            }).on("input", function () {
+              this.style.height = "auto";
+              this.style.height = (this.scrollHeight) + "px";
+            });
+        });
+    </script>
+
+{% endblock %}

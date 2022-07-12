@@ -1,0 +1,51 @@
+{% load theme_tags wagtailimages_tags %}
+
+<section
+        class="w-full wm-container-dark mb-32 bg-wm-darkblue"
+        x-data="{ shown: false }"
+        x-intersect:enter="shown = true"
+        x-intersect:leave="shown = false"
+        :class="shown ? 'wm-container-dark-onscreen' : ''"
+>
+    <div class="grid grid-cols-12 py-20">
+        <div class="col-span-1 md:col-span-2"></div>
+        <div class="col-span-10 md:col-span-8">
+            {% wm_richtext self.heading 'h2' 'text-center text-3xl pb-4 text-white font-[700]' %}
+            <div class="grid grid-cols-12 gap-y-12 py-8">
+                {% for event in self.events %}
+                <div class="flex items-center justify-center lg:col-span-4 col-span-full">
+                    {% image event.image width-500 format-png as event_img %}
+                    <img src="{{ event_img.url }}" loading="lazy" class="img-fluid" alt="">
+                </div>
+                <div class="flex flex-col justify-center max-w-3xl text-center col-span-full lg:col-span-8 lg:text-left">
+                    {% if event.name %}
+                        <p class="text-sm tracking-wider uppercase text-wm-lightblue pb-2">{{ event.name }}</p>
+                    {% endif %}
+                    {% wm_richtext event.heading 'h3' 'text-3xl text-white' %}
+                    {% wm_richtext event.content 'p' 'mt-4 text-xl font-extralight text-white' %}
+                    {% if event.button_content %}
+                        <div>
+                            <button
+                                type="button"
+                                class="
+                                rounded
+                                p-2 mt-7
+                                transition duration-300
+                                font-paragraph text-white
+                                border-2 border-white
+                                hover:bg-white hover:text-black
+                                active:bg-white active:text-black
+                                "
+                                {% if event.button_link %}onclick="location.href='{{ event.button_link.full_url }}'"{% endif %}
+                            >
+                            {% wm_richtext event.button_content 'span' '' %}
+                        </button>
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-span-1 md:col-span-2"></div>
+    </div>
+</section>

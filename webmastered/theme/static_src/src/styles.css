@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*Hiding elements until Alpine loads with `x-cloak`*/
+[x-cloak] {
+    display: none !important;
+}
+
+.wm-home-hero-container {
+    background-image:
+        url("/static/img/waves.svg"),
+        linear-gradient(0deg, rgba(255,255,255,0) 0%, #001d56 100%),
+        url("/static/img/bridge.jpeg");
+    background-position: 50% 100%, 0 0, 50% 50%;
+    background-size: auto, auto, cover;
+    background-repeat: repeat-x, repeat, no-repeat;
+    background-attachment: scroll, scroll, scroll;
+    background-clip: border-box;
+    -webkit-text-fill-color: inherit;
+}
+
+.wm-flex-hero-container {
+    background-image:
+        linear-gradient(0deg, rgba(255,255,255,0) 0%, #001d56 100%),
+        url("/static/img/bridge.jpeg");
+    background-position: 0 0, 50% 50%;
+    background-size: auto, cover;
+    background-repeat: repeat, no-repeat;
+    background-attachment: scroll, scroll;
+    background-clip: border-box;
+    -webkit-text-fill-color: inherit;
+}
+
+.wm-hero-container em {
+    color: #66c4de;
+}
+
+.wm-container-light em {
+    font-weight: 700;
+    color: #00308f;
+}
+
+.wm-container-dark em {
+    font-weight: 700;
+}
+
+.wm-account-background {
+    background-image: url("/static/img/login-waves.png");
+    /*background-color: #ccd6e9;*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+

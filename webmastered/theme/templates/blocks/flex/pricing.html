@@ -1,0 +1,78 @@
+{% load theme_tags %}
+
+<section class="w-full wm-container pb-32" x-data="{selected:1}" x-cloak>
+    <div class="grid grid-cols-12">
+        <div class="col-span-1 md:col-span-2"></div>
+        <div class="col-span-10 md:col-span-8">
+            {% wm_richtext self.heading 'h2' 'text-3xl text-wm-blue font-[700] text-center mb-2 md:mb-4 xl:mb-6' %}
+            <div class="flex flex-row justify-center py-8 gap-0 my-auto">
+                {% for table in self.pricing_tables %}
+                    <button
+                            class="
+                            font-paragraph
+                            border-wm-blue
+                            {% if forloop.first %}rounded-l-lg border-r-0{% elif forloop.last %}rounded-r-lg border-l-0{% else %}rounded-none{% endif %}
+                            border-2 py-1 px-2"
+                            @click="selected !== {{ forloop.counter }} ? selected = {{ forloop.counter }} : selected = {{ forloop.counter }}"
+                            :class="selected == {{ forloop.counter }} ? 'bg-wm-blue text-white' : 'text-wm-blue'"
+                    >
+                        {{ table.name }}
+                    </button>
+                {% endfor %}
+            </div>
+
+            {% for table in self.pricing_tables %}
+                <div class="max-w-screen-lg px-4 md:px-8 mx-auto mb-6 md:mb-8" :class="selected != {{ forloop.counter }} ? 'hidden overflow-hidden' : ''">
+                <div class="mb-10 md:mb-16">
+                    {% wm_richtext table.heading 'h2' 'text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-6' %}
+                    {% wm_richtext table.description 'p' 'max-w-screen-md text-gray-500 md:text-lg text-center mx-auto' %}
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-8 gap-y-12 mb-6 md:mb-8">
+                    <!-- plan - start -->
+                    {% for tier in table.tiers %}
+                        <div class="flex flex-col space-y-4">
+                            <div class="flex flex-col border rounded-lg relative {% if tier.highlight_tier_text %}border-wm-blue{% endif %} gap-4 p-4 pt-6">
+                                {% if tier.highlight_tier_text %}
+                                    <div class="flex justify-center absolute -top-3 inset-x-0">
+                                        <span class="h-6 flex justify-center items-center bg-wm-blue text-white text-xs font-semibold tracking-widest uppercase rounded-full px-3 py-1">
+                                            {{ tier.highlight_tier_text }}
+                                        </span>
+                                    </div>
+                                {% endif %}
+                                {% wm_richtext tier.name 'h3' 'text-gray-800 text-2xl font-semibold text-center' %}
+                                <div class="flex justify-center items-end gap-1">
+                                    <span class="text-4xl text-gray-800 font-bold">£{{ tier.price }}</span>
+                                    <span class="text-gray-500">/ month</span>
+                                </div>
+                                <div class="flex justify-center items-center text-gray-500 text-sm gap-1 mb-4">
+                                    {% wm_richtext tier.description 'p' 'text-center' %}
+                                </div>
+                            </div>
+                            <div class="flex-1 bg-gray-100 rounded-lg space-y-3 px-4 py-6">
+                                <!-- check - start -->
+                                {% for feature in tier.features %}
+                                    <div class="flex gap-2">
+                                        {% if feature.feature_type == 'inc' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 shrink-0 text-wm-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        {% elif feature.feature_type == 'add' %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 shrink-0 text-wm-blue" fill="none" viewBox="0 0 16 16" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                            </svg>
+                                        {% endif %}
+                                        {% wm_richtext feature.feature_text 'span' 'text-gray-600' %}
+                                    </div>
+                                {% endfor %}
+                                <!-- check - end -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <!-- plan - end -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-span-1 md:col-span-2"></div>
+    </div>
+</section>

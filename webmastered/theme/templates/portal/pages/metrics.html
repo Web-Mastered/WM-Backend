@@ -1,0 +1,54 @@
+{% extends "portal/base.html" %}
+
+{% load static %}
+
+{% block title %}Metrics{% endblock %}
+
+{% block heading %}Metrics{% endblock %}
+
+{% block content %}
+
+    <section>
+        <div class="relative items-center w-full x-auto">
+            <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-3">
+                <div class="p-6">
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/metrics.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Website Metrics
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        View metrics related to your website from the Cloudflare firewall. Metrics include visitor
+                        count and country breakdown, and firewall events.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a href="{% url 'metrics_website' %}"
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <img class="object-cover object-center w-full mb-8 lg:h-48 md:h-36 rounded-xl" src="{% static 'img/portal/server_metrics.jpeg' %}" alt="blog">
+                    <h1 class="mx-auto mb-8 text-2xl font-semibold leading-none tracking-tighter text-neutral-600 lg:text-3xl">
+                        Server Metrics
+                    </h1>
+                    <p class="mx-auto text-base leading-relaxed text-gray-500">
+                        View metrics related to your dedicated server from the VPS provider. Metrics include CPU load,
+                        RAM usage, and storage usage.
+                    </p>
+                    <div class="mt-4">
+                    <div class="mt-4">
+                        <a href="{% url 'metrics_server' %}"
+                           class="inline-flex items-center mt-4
+                           font-semibold text-wm-blue
+                           lg:mb-0 hover:text-neutral-600">Navigate »</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

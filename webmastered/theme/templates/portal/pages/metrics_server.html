@@ -1,0 +1,293 @@
+{% extends "portal/base.html" %}
+
+{% load static theme_tags cache %}
+
+{% block title %}Server Metrics{% endblock %}
+
+{% block heading %}Server Metrics{% endblock %}
+
+{% block content %}
+
+    <section>
+        <div class="relative items-center x-auto">
+            <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-5 mb-6">
+                {% cache 172800 wm-server-location-cache request.user.username %}
+                    <div class="wm-server-location p-6 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        Location
+                    </h1>
+                    <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right">
+                        {{ region.data }}
+                    </p>
+                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                        {% epoch_to_datetime region.timestamp as region_datetime %}
+                        Updated : {{ region_datetime|date:"h:i a" }}
+                    </p>
+                </div>
+                {% endcache %}
+                {% cache 86400 wm-server-status-cache request.user.username %}
+                    <div class="wm-server-status p-6 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        Status
+                    </h1>
+                    <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                        {{ status.data }}
+                    </p>
+                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                        {% epoch_to_datetime status.timestamp as status_datetime %}
+                        Updated : {{ status_datetime|date:"h:i a" }}
+                    </p>
+                </div>
+                {% endcache %}
+                {% cache 86400 wm-server-vcpus-cache request.user.username %}
+                    <div class="wm-server-vcpus p-6 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        CPU Cores
+                    </h1>
+                    <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                        {{ cpu.cores }}
+                    </p>
+                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                        {% epoch_to_datetime cpu.timestamp_cores as cores_datetime %}
+                        Updated : {{ cores_datetime|date:"h:i a" }}
+                    </p>
+                </div>
+                {% endcache %}
+                {% cache 86400 wm-server-memory-cache request.user.username %}
+                    <div class="wm-server-memory p-6 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        Total RAM
+                    </h1>
+                    <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                        {{ memory.total }} GB
+                    </p>
+                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                        {% epoch_to_datetime memory.timestamp_total as mem_total_datetime %}
+                        Updated : {{ mem_total_datetime|date:"h:i a" }}
+                    </p>
+                </div>
+                {% endcache %}
+                {% cache 86400 wm-server-disk-cache request.user.username %}
+                    <div class="wm-server-disk p-6 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        Total Storage
+                    </h1>
+                    <p class="mx-auto mb-4 text-2xl leading-relaxed text-gray-500 text-right capitalize">
+                        {{ disk.total }} GB
+                    </p>
+                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                        {% epoch_to_datetime disk.timestamp_total as disk_total_datetime %}
+                        Updated : {{ disk_total_datetime|date:"h:i a" }}
+                    </p>
+                </div>
+                {% endcache %}
+            </div>
+            <div class="grid w-full grid-cols-1 gap-6 mx-auto 2xl:grid-cols-3 mb-6">
+                {% cache 1800 wm-server-load1-cache request.user.username %}
+                    <div class="wm-server-load1 p-6 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        CPU Load Avg - 1 Minute
+                    </h1>
+                    <p class="mx-auto mb-4 text-lg leading-relaxed text-gray-500">
+                        This metric shows the average CPU load over 1 minute before the metric was updated.
+                    </p>
+                    <canvas id="cpuLoadAvg1" class="w-full h-max"></canvas>
+                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                        {% epoch_to_datetime cpu.timestamp_load1 as cpu_load1_datetime %}
+                        Updated : {{ cpu_load1_datetime|date:"h:i a" }}
+                    </p>
+                </div>
+                {% endcache %}
+                {% cache 1800 wm-server-load5-cache request.user.username %}
+                    <div class="wm-server-load5 p-6 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        CPU Load Avg - 5 Minutes
+                    </h1>
+                    <p class="mx-auto mb-4 text-lg leading-relaxed text-gray-500">
+                        This metric shows the average CPU load over 5 minutes before the metric was updated.
+                    </p>
+                    <canvas id="cpuLoadAvg5" class="w-full h-max"></canvas>
+                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                        {% epoch_to_datetime cpu.timestamp_load5 as cpu_load5_datetime %}
+                        Updated : {{ cpu_load5_datetime|date:"h:i a" }}
+                    </p>
+                </div>
+                {% endcache %}
+                {% cache 1800 wm-server-load15-cache request.user.username %}
+                    <div class="wm-server-load15 p-6 rounded-xl border-2 border-wm-blue">
+                    <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                        CPU Load Avg - 15 Minutes
+                    </h1>
+                    <p class="mx-auto mb-4 text-lg leading-relaxed text-gray-500">
+                        This metric shows the average CPU load over 15 minutes before the metric was updated.
+                    </p>
+                    <canvas id="cpuLoadAvg15" class="w-full h-max"></canvas>
+                    <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                        {% epoch_to_datetime cpu.timestamp_load15 as cpu_load15_datetime %}
+                        Updated : {{ cpu_load15_datetime|date:"h:i a" }}
+                    </p>
+                </div>
+                {% endcache %}
+            </div>
+            <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-2">
+                {% cache 600 wm-server-mem-usage request.user.username %}
+                    <div class="wm-server-memory-util p-6 rounded-xl border-2 border-wm-blue">
+                        <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                            RAM Usage
+                        </h1>
+                        <canvas id="memoryUsage" class="w-full h-max"></canvas>
+                        <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                            {% epoch_to_datetime memory.timestamp_avail as mem_avail_datetime %}
+                            Updated : {{ mem_avail_datetime|date:"h:i a" }}
+                        </p>
+                    </div>
+                {% endcache %}
+                {% cache 600 wm-server-disk-usage request.user.username %}
+                    <div class="wm-server-disk-util p-6 rounded-xl border-2 border-wm-blue">
+                        <h1 class="mx-auto mb-8 text-xl font-semibold leading-none tracking-tighter text-neutral-600">
+                            Storage Usage
+                        </h1>
+                        <canvas id="diskUsage" class="w-full h-max"></canvas>
+                        <p class="mx-auto text-sm leading-relaxed text-gray-500 text-right">
+                            {% epoch_to_datetime disk.timestamp_free as disk_free_datetime %}
+                            Updated : {{ disk_free_datetime|date:"h:i a" }}
+                        </p>
+                    </div>
+                {% endcache %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js" integrity="sha256-cHVO4dqZfamRhWD7s4iXyaXWVK10odD+qp4xidFzqTI=" crossorigin="anonymous"></script>
+
+    <script>
+        const cpuLoadAvg1 = document.getElementById('cpuLoadAvg1');
+        const cpuLoadAvg1Chart = new Chart(cpuLoadAvg1, {
+            type: 'bar',
+            data: {
+                labels: ['Load'],
+                datasets: [{
+                    label: 'Avg Load (%)',
+                    data: [{{ cpu.load1 }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                    }
+                }
+            }
+        });
+
+        const cpuLoadAvg5 = document.getElementById('cpuLoadAvg5');
+        const cpuLoadAvg5Chart = new Chart(cpuLoadAvg5, {
+            type: 'bar',
+            data: {
+                labels: ['Load'],
+                datasets: [{
+                    label: 'Avg Load (%)',
+                    data: [{{ cpu.load5 }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                    }
+                }
+            }
+        });
+
+
+        const cpuLoadAvg15 = document.getElementById('cpuLoadAvg15');
+        const cpuLoadAvg15Chart = new Chart(cpuLoadAvg15, {
+            type: 'bar',
+            data: {
+                labels: ['Load'],
+                datasets: [{
+                    label: 'Avg Load (%)',
+                    data: [{{ cpu.load15 }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                    }
+                }
+            }
+        });
+
+        const memoryUsage = document.getElementById('memoryUsage');
+        const memoryUsageChart = new Chart(memoryUsage, {
+            type: 'pie',
+            data: {
+                labels: ['Available (GB)', 'Used (GB)'],
+                datasets: [{
+                    label: 'Avg Load (%)',
+                    data: [{{ memory.avail }}, ({{ memory.total }} - {{ memory.avail }})],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+        });
+
+
+        const diskUsage = document.getElementById('diskUsage');
+        const diskUsageChart = new Chart(diskUsage, {
+            type: 'pie',
+            data: {
+                labels: ['Available (GB)', 'Used (GB)'],
+                datasets: [{
+                    label: 'Avg Load (%)',
+                    data: [{{ disk.free }}, ({{ disk.total }} - {{ disk.free }})],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+        });
+
+    </script>
+{% endblock %}

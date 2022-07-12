@@ -1,0 +1,79 @@
+{% load static tailwind_tags wagtailuserbar wagtailimages_tags theme_tags %}
+
+<section class="w-full wm-container bg-wm-darkblue" x-data="{ shown: false }" x-intersect:enter="shown = true" x-intersect:leave="shown = false" :class="shown ? 'wm-container-dark-onscreen' : ''">
+    <div class="">
+        <footer class="max-w-screen-2xl px-4 md:px-8 mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 lg:gap-8 pt-10 lg:pt-12 mb-16">
+                <div class="col-span-full lg:col-span-2">
+                    <!-- logo - start -->
+                    <div class="lg:-mt-2 mb-4">
+                        <a href="/" class="inline-flex items-center text-gray-100 text-xl md:text-2xl font-bold gap-2" aria-label="logo">
+                            {% image settings.dashboard.WebsiteSettings.darkmode_logo width-200 format-png as darkmode_logo_100 %}
+                            <img src="{{ darkmode_logo_100.url }}" class="" width="95" alt="">
+                        </a>
+                    </div>
+                    <!-- logo - end --> {% wm_richtext settings.dashboard.WebsiteSettings.footer_text 'p' 'text-gray-400 sm:pr-8 mb-6' %}
+                    <!-- social - start -->
+                    <div class="flex gap-4">
+                        {% get_social_media_account as social_media_accounts %}
+                        {% for account in social_media_accounts %}
+                            <a href="{{ account.account_url }}" target="_blank" class="text-gray-400 hover:text-gray-500 active:text-gray-600 text-2xl transition duration-100 fa-brands {{ account.account_platform }}">
+                            </a>
+                        {% endfor %}
+                            <a href="mailto:{{ settings.dashboard.WebsiteSettings.business_email }}" target="_blank" class="text-gray-400 hover:text-gray-500 active:text-gray-600 text-2xl transition duration-100 fa-regular fa-envelope">
+                            </a>
+                    </div>
+                    <!-- social - end -->
+                </div>
+                {% get_homepage as homepage %}
+                {% for page in homepage.get_children.live.in_menu %}
+                <!-- nav - start -->
+                    <div>
+                        <div onclick="location.href='{{ page.url }}'" class="text-gray-100 hover:text-gray-500 active:text-gray-600 font-bold tracking-widest uppercase mb-4 font-paragraph cursor-pointer">{{ page.title }}</div>
+                        <nav class="flex flex-col gap-4">
+                            {% for subpage in page.get_children.live.in_menu %}
+                                <div>
+                                    <a href="{{ subpage.url }}" class="text-gray-400 hover:text-wm-lightblue active:text-wm-lightblue transition duration-100">
+                                        {{ subpage.title }}
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </nav>
+                    </div>
+                {% endfor %}
+                <!-- nav - start -->
+                <div>
+                    <div class="text-gray-100 font-bold tracking-widest uppercase mb-4 font-paragraph">Legal</div>
+                    <nav class="flex flex-col gap-4">
+                        <div>
+                            <a href="{{ settings.dashboard.WebsiteSettings.terms_and_conditions_page.url }}" class="text-gray-400 hover:text-wm-lightblue active:text-wm-lightblue transition duration-100">Terms & Conditions</a>
+                        </div>
+                        <div>
+                            <a href="{{ settings.dashboard.WebsiteSettings.privacy_policy_page.url }}" class="text-gray-400 hover:text-wm-lightblue active:text-wm-lightblue transition duration-100">Privacy Policy</a>
+                        </div>
+                        <div>
+                            <a href="{{ settings.dashboard.WebsiteSettings.cookie_policy_page.url }}" class="text-gray-400 hover:text-wm-lightblue active:text-wm-lightblue transition duration-100">Cookie Policy</a>
+                        </div>
+                    </nav>
+                </div>
+                <!-- nav - end -->
+
+            </div>
+            <script>
+                function romanize(num) {
+                    if (!+num) return false;
+                    var digits = String(+num).split(""),
+                        key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM", "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC", "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+                        roman = "",
+                        i = 3;
+                    while (i--) roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+                    return Array(+digits.join("") + 1).join("M") + roman;
+                }
+                var year = romanize(new Date().getFullYear())
+            </script>
+            <div class="text-gray-400 text-sm text-center border-t border-white py-8">&#169;&nbsp;&nbsp; <script type="text/javascript">
+                    document.write(year)
+                </script>&nbsp;&nbsp;Web Mastered Ltd.&nbsp;&nbsp;All rights reserved.</div>
+        </footer>
+    </div>
+</section>
