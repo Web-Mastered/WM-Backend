@@ -5,7 +5,10 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
 
-DEBUG = os.environ.get('DEBUG')
+if os.environ.get('DEBUG') == 'False':
+    DEBUG = False
+else:
+    DEBUG = True
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 ALLOWED_HOSTS = ['*']
