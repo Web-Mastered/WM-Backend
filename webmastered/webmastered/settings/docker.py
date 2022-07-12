@@ -11,6 +11,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['http://localhost:1337', os.environ.get('FULL_URL')]
 
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+DIGITALOCEAN_ACCESS_TOKEN = os.environ.get('DIGITALOCEAN_ACCESS_TOKEN')
+CLOUDFLARE_API_TOKEN = os.environ.get('CLOUDFLARE_API_TOKEN')
+STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY')
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 sentry_sdk.init(
