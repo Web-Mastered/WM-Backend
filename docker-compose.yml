@@ -54,7 +54,7 @@ services:
     networks:
       - frontend-net
   redis:
-    container_name: wm_redis
+    container_name: wm2_redis
     restart: unless-stopped
     image: redis:alpine
     command: redis-server --requirepass ${REDIS_PASSWORD}
