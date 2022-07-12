@@ -16,8 +16,8 @@ def generate_plausible_js():
 
 @register.simple_tag()
 def generate_sentry_js():
-    script_src = "https://browser.sentry-cdn.com/7.4.1/bundle.tracing.min.js"
-    script_integrity = "sha384-ds6IbhsiciQgt1/ldOPJxoIUclW/dP6HCe+/3K51FkGDyhg1zAtR+F93OH66QFp1"
+    script_src = "https://browser.sentry-cdn.com/7.6.0/bundle.tracing.min.js"
+    script_integrity = "sha384-Xq/3Nmu7NlebKM710GahhIbqq6na6mHcKZZl4nrO9wnfETcVVTfZVGGzz1xzxxxC"
     js = f'<script src="{script_src}" integrity="{script_integrity}" crossorigin="anonymous"></script>'
 
     if settings.DEBUG:
