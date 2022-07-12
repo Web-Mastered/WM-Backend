@@ -9,7 +9,10 @@ DEBUG = os.environ.get('DEBUG')
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://localhost:1337', os.environ.get('FULL_URL')]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:1337']
+
+if os.environ.get('FULL_URL'):
+    CSRF_TRUSTED_ORIGINS.append(os.environ.get('FULL_URL'))
 
 WAGTAILADMIN_BASE_URL = os.environ.get('FULL_URL')
 
