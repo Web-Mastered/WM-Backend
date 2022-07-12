@@ -23,7 +23,7 @@ def homepage(request):
                                 "please contact the WM team.")
         if tools.is_staff(this_user):
             messages.warning(request, "You have been redirected to the admin portal as you are staff")
-            return redirect('/admin')
+            return redirect('/engine')
         return redirect('/')
     else:
         this_client = tools.get_client(this_user)
@@ -44,7 +44,7 @@ def metrics(request):
                                 "please contact the WM team.")
         if tools.is_staff(this_user):
             messages.warning(request, "You have been redirected to the admin portal as you are staff")
-            return redirect('/admin')
+            return redirect('/engine')
         return redirect('/')
     else:
         this_client = tools.get_client(this_user)
@@ -67,7 +67,7 @@ def metrics_server(request):
                                 "please contact the WM team.")
         if tools.is_staff(this_user):
             messages.warning(request, "You have been redirected to the admin portal as you are staff")
-            return redirect('/admin')
+            return redirect('/engine')
         return redirect('/')
     else:
         this_client = tools.get_client(this_user)
@@ -97,7 +97,7 @@ def metrics_website(request):
                                 "please contact the WM team.")
         if tools.is_staff(this_user):
             messages.warning(request, "You have been redirected to the admin portal as you are staff")
-            return redirect('/admin')
+            return redirect('/engine')
         return redirect('/')
     else:
         this_client = tools.get_client(this_user)
@@ -126,7 +126,7 @@ def account(request):
                                 "please contact the WM team.")
         if tools.is_staff(this_user):
             messages.warning(request, "You have been redirected to the admin portal as you are staff")
-            return redirect('/admin')
+            return redirect('/engine')
         return redirect('/')
     else:
         this_client = tools.get_client(this_user)
@@ -146,7 +146,7 @@ def account_billing(request):
                                 "please contact the WM team.")
         if tools.is_staff(this_user):
             messages.warning(request, "You have been redirected to the admin portal as you are staff")
-            return redirect('/admin')
+            return redirect('/engine')
         return redirect('/')
     else:
         this_client = tools.get_client(this_user)
@@ -180,7 +180,7 @@ def account_server_upgrades(request):
                                 "please contact the WM team.")
         if tools.is_staff(this_user):
             messages.warning(request, "You have been redirected to the admin portal as you are staff")
-            return redirect('/admin')
+            return redirect('/engine')
         return redirect('/')
     else:
         this_client = tools.get_client(this_user)
@@ -225,7 +225,7 @@ def support(request):
                                 "please contact the WM team.")
         if tools.is_staff(this_user):
             messages.warning(request, "You have been redirected to the admin portal as you are staff")
-            return redirect('/admin')
+            return redirect('/engine')
         return redirect('/')
     else:
         this_client = tools.get_client(this_user)
