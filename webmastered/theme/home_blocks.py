@@ -1,4 +1,4 @@
-from wagtail.blocks import StructBlock, RichTextBlock, ListBlock, CharBlock, PageChooserBlock
+from wagtail.blocks import StructBlock, RichTextBlock, ListBlock, CharBlock, PageChooserBlock, StreamBlock
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 
@@ -52,6 +52,172 @@ class HeaderAndParagraph(StructBlock):
         template = "blocks/flex/header_and_paragraph.html"
         icon = "pilcrow"
         label = "Heading & Paragraph"
+
+class MultiLevelContent(StructBlock):
+    class Heading1(StructBlock):
+        heading = RichTextBlock(
+            required=False,
+            features=[
+                'emphasis',
+                'bold',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Heading 1",
+            help_text="Enter a heading for the content.",
+        )
+        class Meta:
+            icon = "pilcrow"
+            label = "Heading 1"
+
+    class Heading2(StructBlock):
+        heading = RichTextBlock(
+            required=False,
+            features=[
+                'emphasis',
+                'bold',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Heading 2",
+            help_text="Enter a heading for the content.",
+        )
+        class Meta:
+            icon = "pilcrow"
+            label = "Heading 2"
+
+    class Heading3(StructBlock):
+        heading = RichTextBlock(
+            required=False,
+            features=[
+                'emphasis',
+                'bold',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Heading 3",
+            help_text="Enter a heading for the content.",
+        )
+        class Meta:
+            icon = "pilcrow"
+            label = "Heading 3"
+
+    class Heading3(StructBlock):
+        heading = RichTextBlock(
+            required=False,
+            features=[
+                'emphasis',
+                'bold',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Heading 3",
+            help_text="Enter a heading for the content.",
+        )
+        class Meta:
+            icon = "pilcrow"
+            label = "Heading 3"
+
+    class Heading4(StructBlock):
+        heading = RichTextBlock(
+            required=False,
+            features=[
+                'emphasis',
+                'bold',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Heading 4",
+            help_text="Enter a heading for the content.",
+        )
+        class Meta:
+            icon = "pilcrow"
+            label = "Heading 4"
+
+    class Heading5(StructBlock):
+        heading = RichTextBlock(
+            required=False,
+            features=[
+                'emphasis',
+                'bold',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Heading 5",
+            help_text="Enter a heading for the content.",
+        )
+        class Meta:
+            icon = "pilcrow"
+            label = "Heading 5"
+
+    class Paragraph(StructBlock):
+        paragraph = RichTextBlock(
+            required=False,
+            features=[
+                'emphasis',
+                'bold',
+                'italic',
+                'link',
+                'ul',
+                'ol',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Paragraph",
+            help_text="Enter content for this paragraph.",
+        )
+        class Meta:
+            icon = "pilcrow"
+            label = "Paragraph"
+
+    content = StreamBlock(
+        [
+            ('heading1', Heading1()),
+            ('heading2', Heading2()),
+            ('heading3', Heading3()),
+            ('heading4', Heading4()),
+            ('heading5', Heading5()),
+            ('paragraph', Paragraph()),
+        ]
+    )
+
+    class Meta:
+        template = "blocks/home/multi_level_content.html"
+        icon = "pilcrow"
+        label = "Multi Level Content"
 
 class TwoColumnsHeadingSubHeadingContent(StructBlock):
     """Two columns, heading and subheading on the left, and a paragraph content on the right"""
@@ -361,6 +527,7 @@ class CardCollection(StructBlock):
 
 homepage_content_blocks = [
     ("homepage_headerandparagraph", HeaderAndParagraph()),
+    ("homepage_multilevelcontent", MultiLevelContent()),
     ("homepage_twocolumnsheadingsubheadingcontent", TwoColumnsHeadingSubHeadingContent()),
     ("homepage_twocolumnsheadingsubheadingcontenttwobuttons", TwoColumnsHeadingSubHeadingContentTwoButtons()),
     ("homepage_twocolumnsheadingsubheadingaccordion", TwoColumnsHeadingSubheadingAccordion()),

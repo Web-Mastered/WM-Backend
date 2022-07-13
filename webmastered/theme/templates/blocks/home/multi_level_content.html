@@ -1,0 +1,36 @@
+{% load theme_tags %}
+
+<section class="
+            w-full wm-container mb-32
+            prose-a:text-wm-blue prose-a:italic
+            prose-ol:list-decimal prose-ol:font-paragraph prose-ol:text-xl prose-ol:font-extralight prose-ol:mx-4
+            prose-ul:list-disc prose-ul:font-paragraph prose-ul:text-xl prose-ul:font-extralight prose-ul:mx-4"
+>
+    <div class="grid grid-cols-12">
+        <div class="col-span-1 md:col-span-2"></div>
+        <div class="col-span-10 md:col-span-8">
+            {% for content in self.content %}
+                <div class="md:px-12 pb-6">
+                    {% if content.block_type == 'heading1' %}
+                        {% wm_richtext content.value.heading 'h2' 'text-3xl mb-4 font-[700] text-wm-blue' %}
+                    {% elif content.block_type == 'heading2' %}
+                        {% wm_richtext content.value.heading 'h3' 'text-2xl mb-2 font-[700]' %}
+                    {% elif content.block_type == 'heading3' %}
+                        {% wm_richtext content.value.heading 'h4' 'text-xl mb-2 font-[700]' %}
+                    {% elif content.block_type == 'heading4' %}
+                        {% wm_richtext content.value.heading 'h5' 'text-lg mb-2 font-[700]' %}
+                    {% elif content.block_type == 'heading5' %}
+                        {% wm_richtext content.value.heading 'h6' 'text-lg mb-2 font-[700]' %}
+                    {% elif content.block_type == 'paragraph' %}
+                        {% if forloop.last %}
+                            {% wm_richtext content.value.paragraph 'p' 'text-xl font-extralight' %}
+                        {% else %}
+                            {% wm_richtext content.value.paragraph 'p' 'text-xl font-extralight mb-4' %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-span-1 md:col-span-2"></div>
+    </div>
+</section>
