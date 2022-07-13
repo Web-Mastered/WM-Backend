@@ -1,4 +1,6 @@
 import folium
+from sentry_sdk import capture_exception
+
 from business.models import Client, Staff
 
 from django.contrib import messages
@@ -697,5 +699,6 @@ viewer {
                 t.join()
 
         except Exception as e:
+            capture_exception(e)
             messages.error(self.request,
                            "Unable to fetch website metrics. Please contact the WM team if this issue continues.")
