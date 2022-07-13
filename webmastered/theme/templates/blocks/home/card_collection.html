@@ -1,0 +1,27 @@
+{% load theme_tags wagtailimages_tags %}
+
+<section class="w-full wm-container mb-32 prose-a:text-wm-blue prose-a:italic">
+    <div class="grid grid-cols-12">
+        <div class="col-span-1 md:col-span-2"></div>
+        <div class="col-span-10 md:col-span-8">
+            {% wm_richtext self.heading 'h2' 'text-3xl mb-8 md:mb-12 font-[700] text-wm-blue' %}
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                {% for card in self.cards %}
+                    <!-- card - start -->
+                    <div>
+                        <a href="{{ card.card_page.full_url }}" class="group h-96 flex items-end bg-gray-100 rounded-lg overflow-hidden shadow-lg relative p-4">
+                            {% image card.image width-1000 format-png as card_img %}
+                            <img src="{{ card_img.url }}" loading="lazy" class="w-full h-full object-cover object-center absolute inset-0 group-hover:scale-110 transition duration-200" />
+                            <div class="w-full flex flex-col bg-white text-center rounded-lg relative p-4">
+                                {% wm_richtext card.title 'span' 'text-lg lg:text-xl font-bold text-wm-blue' %}
+                                {% wm_richtext card.content 'span' 'text-sm text-gray-800' %}
+                            </div>
+                        </a>
+                    </div>
+                    <!-- card - end -->
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-span-1 md:col-span-2"></div>
+    </div>
+</section>

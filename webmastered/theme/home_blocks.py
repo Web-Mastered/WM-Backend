@@ -294,6 +294,71 @@ class CTACardLeftContentRightLargeImage(StructBlock):
         label = "Call-to-action"
 
 
+class CardCollection(StructBlock):
+    class Card(StructBlock):
+        image = ImageChooserBlock(
+            required=True,
+            verbose_name="Image",
+            help_text="This image will be displayed as a background of the card.",
+        )
+        title = RichTextBlock(
+            blank=True,
+            null=True,
+            features=[
+                'emphasis',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Title",
+            help_text="This text will be the title of this card.",
+        )
+        content = RichTextBlock(
+            blank=True,
+            null=True,
+            verbose_name="Content",
+            help_text="This text will be the contents of this card",
+        )
+        card_page = PageChooserBlock(
+            verbose_name="Page link",
+            help_text="Choose a page to be opened when the user clicks this card.",
+        )
+
+        class Meta:
+            icon = "pick"
+            label = "Card"
+
+    heading = RichTextBlock(
+        blank=True,
+        null=True,
+        features=[
+            'emphasis',
+            'italic',
+            'link',
+            'document-link',
+            'code',
+            'superscript',
+            'subscript',
+            'strikethrough',
+        ],
+        verbose_name="Heading",
+        help_text="This text will be displayed in the heading section of this block.",
+    )
+
+    cards = ListBlock(
+        Card()
+    )
+
+    class Meta:
+        template = "blocks/home/card_collection.html"
+        icon = "grip"
+        label = "Card Collection"
+
+
 homepage_content_blocks = [
     ("homepage_headerandparagraph", HeaderAndParagraph()),
     ("homepage_twocolumnsheadingsubheadingcontent", TwoColumnsHeadingSubHeadingContent()),
@@ -301,6 +366,7 @@ homepage_content_blocks = [
     ("homepage_twocolumnsheadingsubheadingaccordion", TwoColumnsHeadingSubheadingAccordion()),
     ("homepage_featurespotlight", FeatureSpotlight()),
     ("homepage_ctacardleftcontentrightlargeimage", CTACardLeftContentRightLargeImage()),
+    ("homepage_cardcollection", CardCollection()),
 ]
 
 homepage_content_streamfield = StreamField(
