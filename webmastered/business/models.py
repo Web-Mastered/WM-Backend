@@ -39,13 +39,13 @@ class Staff(models.Model):
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="client_profile")
-    company_name = models.CharField(help_text="Customer's company name.", max_length=255, unique=True)
-    domain_name = models.CharField(help_text="Customer's website domain name.", max_length=255, unique=True)
-    stripe_customer_id = models.CharField(help_text="Stripe ID of customer", max_length=255, unique=True,
+    company_name = models.CharField(help_text="Customer's company name.", max_length=255, unique=False)
+    domain_name = models.CharField(help_text="Customer's website domain name.", max_length=255, unique=False)
+    stripe_customer_id = models.CharField(help_text="Stripe ID of customer", max_length=255, unique=False,
                                           verbose_name="Stripe Customer ID")
-    cloudflare_zone_id = models.CharField(help_text="CF Zone ID of customer", max_length=255, unique=True,
+    cloudflare_zone_id = models.CharField(help_text="CF Zone ID of customer", max_length=255, unique=False,
                                           verbose_name="Cloudflare Zone ID")
-    digitalocean_droplet_id = models.CharField(help_text="DO Droplet ID of customer", max_length=255, unique=True,
+    digitalocean_droplet_id = models.CharField(help_text="DO Droplet ID of customer", max_length=255, unique=False,
                                                verbose_name="DigitalOcean Droplet ID")
 
     def __str__(self):
