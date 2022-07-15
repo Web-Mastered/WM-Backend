@@ -12,7 +12,7 @@
         url("/static/img/waves.svg"),
         linear-gradient(0deg, rgba(255,255,255,0) 0%, #001d56 100%),
         url("/static/img/bridge.jpeg");
-    background-position: 50% 100%, 0 0, 50% 50%;
+    background-position: right 0 bottom -1px, 0 0, 50% 50%;
     background-size: contain, auto, cover;
     background-repeat: no-repeat, repeat, no-repeat;
     background-attachment: scroll, scroll, scroll;
