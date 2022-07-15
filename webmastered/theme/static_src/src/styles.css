@@ -13,8 +13,8 @@
         linear-gradient(0deg, rgba(255,255,255,0) 0%, #001d56 100%),
         url("/static/img/bridge.jpeg");
     background-position: 50% 100%, 0 0, 50% 50%;
-    background-size: auto, auto, cover;
-    background-repeat: repeat-x, repeat, no-repeat;
+    background-size: contain, auto, cover;
+    background-repeat: no-repeat, repeat, no-repeat;
     background-attachment: scroll, scroll, scroll;
     background-clip: border-box;
     -webkit-text-fill-color: inherit;
