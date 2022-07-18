@@ -38,8 +38,8 @@
                                 "
                                 {% if event.button_link %}onclick="location.href='{{ event.button_link.full_url }}'"{% endif %}
                             >
-                            {% wm_richtext event.button_content 'span' '' %}
-                        </button>
+                                {% wm_richtext event.button_content 'span' '' %}
+                            </button>
                         </div>
                     {% endif %}
                 </div>

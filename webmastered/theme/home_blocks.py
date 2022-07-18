@@ -396,6 +396,28 @@ class FeatureSpotlight(TwoColumnsHeadingSubHeadingContent):
             help_text="This text will be the contents of this feature block",
         )
 
+        button_content = RichTextBlock(
+            required=False,
+            features=[
+                'emphasis',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Button text",
+            help_text="Optional: You can add a button to display below the content. Enter the text to go inside the button",
+        )
+
+        button_link = PageChooserBlock(
+            required=False,
+            verbose_name="Button link",
+            help_text="Optional: You can link a page to this button."
+        )
+
         class Meta:
             icon = "pick"
             label = "Feature"
