@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags theme_tags %}
+
+{% block title %}Page not found{% endblock %}
+
+{% block content %}
+
+{#    <section class="relative w-full min-h-screen wm-hero-container wm-home-hero-container pb-32 pt-16">#}
+{#        <div class="grid lg:grid-cols-2 h-full">#}
+{#            <div class="px-16 pt-16">#}
+{#                <h1 class="text-4xl sm:text-5xl md:text-6xl py-7 leading-tight text-white font-light wm-hero-title prose-p:font-heading">Page not found</h1>#}
+{#                <p class="text-2xl sm:text-3xl md:text-4xl leading-tight font-extralight py-7 text-white font-light wm-hero-subtitle">#}
+{#                    The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.#}
+{#                </p>#}
+{#                <button#}
+{#                        type="button"#}
+{#                        class="#}
+{#                        rounded#}
+{#                        bg-white#}
+{#                        p-2 mt-7#}
+{#                        transition#}
+{#                        duration-300#}
+{#                        active:wm-hero-btn-active#}
+{#                        font-paragraph#}
+{#                        border-2#}
+{#                        border-transparent#}
+{#                        hover:bg-wm-darkblue#}
+{#                        hover:text-white#}
+{#                        hover:border-white#}
+{#                        active:bg-wm-darkblue#}
+{#                        active:text-white#}
+{#                        active:border-white#}
+{#                        "#}
+{#                        onclick="location.href='/'"#}
+{#                >#}
+{#                    Navigate Home#}
+{#                </button>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+
+    <section class="relative w-full wm-hero-container wm-home-hero-container pb-32 pt-16">
+        <div class="grid lg:grid-cols-2 h-full">
+            <div class="px-16 pt-16 lg:mb-24 mb-6">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl py-7 leading-tight text-white wm-hero-title">
+                    Page not found
+                </h1>
+                <button
+                        type="button"
+                        class="
+                        rounded
+                        bg-white
+                        p-2 mt-7
+                        transition
+                        duration-300
+                        active:wm-hero-btn-active
+                        font-paragraph
+                        border-2
+                        border-transparent
+                        hover:bg-wm-darkblue
+                        hover:text-white
+                        hover:border-white
+                        active:bg-wm-darkblue
+                        active:text-white
+                        active:border-white
+                        "
+                        onclick="location.href='/'"
+                >
+                    Navigate Home
+                </button>
+            </div>
+        </div>
+    </section>
+
+    {% block page_content %}
+        <section class="w-full wm-container mb-32 prose-a:text-wm-blue prose-a:italic">
+            <div class="grid grid-cols-12 py-20">
+                <div class="col-span-1 md:col-span-2"></div>
+                <div class="col-span-10 md:col-span-8">
+                    <div x-data class="md:px-12">
+                        <p class="text-2xl sm:text-3xl md:text-4xl leading-tight font-extralight py-7 font-light wm-hero-subtitle">
+                            The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-span-1 md:col-span-2"></div>
+            </div>
+        </section>
+    {% endblock %}
+
+{% endblock %}

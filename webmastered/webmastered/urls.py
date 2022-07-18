@@ -24,6 +24,10 @@ if settings.DEBUG:
     from django.conf.urls.static import static
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+    from django.views.defaults import page_not_found, server_error
+    def wm_page_not_found(request):
+        return page_not_found(request, None)
+
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -31,6 +35,8 @@ if settings.DEBUG:
     # Django Debug Toolbar
     urlpatterns = [
         path('__debug__/', include('debug_toolbar.urls')),
+        path("404/", wm_page_not_found),
+        path("500/", server_error),
     ] + urlpatterns
 
 urlpatterns = urlpatterns + [
