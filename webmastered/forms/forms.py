@@ -85,43 +85,37 @@ class ContactForm(forms.ModelForm):
             raise forms.ValidationError('To send this form, you must tick this box.')
         return consented
 
-    def clean_protect(self):
-        honeypot = self.cleaned_data.get('protect')
-        if honeypot:
-            raise forms.ValidationError('Blocked by spam protection.')
-        return honeypot
-
     def save(self, commit=True):
-        saveStatus = super().save(commit)
+        if not self.cleaned_data.get('protect'):
+            save_status = super().save(commit)
+            if self.cleaned_data.get('marketing_consent'):
+                if " " in self.instance.name:
+                    first_name, last_name = self.instance.name.split(" ", maxsplit=1)
+                else:
+                    first_name = self.instance.name
+                    last_name = None
+                email = self.instance.email
 
-        if self.cleaned_data.get('marketing_consent'):
-            if " " in self.instance.name:
-                first_name, last_name = self.instance.name.split(" ", maxsplit=1)
-            else:
-                first_name = self.instance.name
-                last_name = None
-            email = self.instance.email
+                sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
 
-            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                data = {
+                    "list_ids": [
+                        settings.SENDGRID_MARKETING_LIST_ID,
+                    ],
+                    "contacts": [
+                        {
+                            "email": email,
+                            "first_name": first_name,
+                        }
+                    ]
+                }
+                if last_name:
+                    data["contacts"][0]["last_name"] = last_name
 
-            data = {
-                "list_ids": [
-                    settings.SENDGRID_MARKETING_LIST_ID,
-                ],
-                "contacts": [
-                    {
-                        "email": email,
-                        "first_name": first_name,
-                    }
-                ]
-            }
-            if last_name:
-                data["contacts"][0]["last_name"] = last_name
+                sg.client.marketing.contacts.put(
+                    request_body=data
+                )
 
-            sg.client.marketing.contacts.put(
-                request_body=data
-            )
-
-        return saveStatus
+            return save_status
 
 
