@@ -51,6 +51,32 @@ class ExternalPage(Page):
         verbose_name_plural = "External Pages"
 
 
+class ExternalWebsite(Page):
+    page_description = "Use this page for linking external websites"
+
+    external_page_url = models.CharField(
+        max_length=255,
+        blank=False,
+        null=False,
+        verbose_name="External page URL",
+        help_text="Enter the URL of the external page."
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("external_page_url"),
+    ]
+
+    def serve(self, request, *args, **kwargs):
+        return HttpResponseRedirect(self.external_page_url)
+
+    def get_sitemap_urls(self, request=None):
+        return []
+
+    class Meta:
+        verbose_name = "External Website"
+        verbose_name_plural = "External Websites"
+
+
 class ContactPage(Page):
     page_description = "This page has an embedded 'contact-us' form"
     max_count = 1

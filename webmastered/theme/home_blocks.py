@@ -547,6 +547,74 @@ class CardCollection(StructBlock):
         label = "Card Collection"
 
 
+class GalleryShowcase(StructBlock):
+
+    class Image(StructBlock):
+        image = ImageChooserBlock(
+            required=True,
+            verbose_name="Image",
+            help_text="This image will be displayed above the title of this feature card.",
+        )
+
+        class Meta:
+            icon = "image"
+            label = "Image"
+
+    heading = RichTextBlock(
+        blank=True,
+        null=True,
+        features=[
+            'emphasis',
+            'italic',
+            'link',
+            'document-link',
+            'code',
+            'superscript',
+            'subscript',
+            'strikethrough',
+        ],
+        verbose_name="Heading",
+        help_text="This text will be displayed in the heading section of this block.",
+    )
+
+    subheading = RichTextBlock(
+        blank=True,
+        null=True,
+        verbose_name="Subheading",
+        help_text="This text will be displayed in the subheading section of this block.",
+    )
+
+    button_link = PageChooserBlock(
+        required=False,
+        verbose_name="Button link",
+    )
+
+    button_content = RichTextBlock(
+        required=False,
+        features=[
+            'emphasis',
+            'italic',
+            'link',
+            'document-link',
+            'code',
+            'superscript',
+            'subscript',
+            'strikethrough',
+        ],
+        verbose_name="Button text",
+        help_text="Optional: You can add a button to display below the content. Enter the text to go inside the button",
+    )
+
+    gallery = ListBlock(
+        Image()
+    )
+
+    class Meta:
+        template = "blocks/home/gallery_showcase.html"
+        icon = "image"
+        label = "Gallery Showcase"
+
+
 homepage_content_blocks = [
     ("homepage_headerandparagraph", HeaderAndParagraph()),
     ("homepage_multilevelcontent", MultiLevelContent()),
@@ -556,6 +624,7 @@ homepage_content_blocks = [
     ("homepage_featurespotlight", FeatureSpotlight()),
     ("homepage_ctacardleftcontentrightlargeimage", CTACardLeftContentRightLargeImage()),
     ("homepage_cardcollection", CardCollection()),
+    ("homepage_galleryshowcase", GalleryShowcase()),
 ]
 
 homepage_content_streamfield = StreamField(

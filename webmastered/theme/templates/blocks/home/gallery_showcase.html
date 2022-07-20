@@ -1,0 +1,56 @@
+{% load theme_tags wagtailimages_tags %}
+
+
+<section class="w-full wm-container mb-32 prose-a:text-wm-blue prose-a:italic">
+    <div class="grid grid-cols-12 py-20">
+        <div class="col-span-1 md:col-span-2"></div>
+        <div class="col-span-10 md:col-span-8">
+            <div class="flex justify-between flex-col gap-8 mb-4 sm:mb-8 md:mb-12">
+                <div class="flex items-center gap-12">
+                    {% wm_richtext self.heading 'h2' 'text-3xl font-[700] text-wm-blue' %}
+                    {% if self.button_content %}
+                        <div class="ml-auto">
+                            <button
+                                type="button"
+                                class="
+                                inline-block rounded
+                                px-4 md:px-8 py-2 md:py-3
+                                transition duration-300
+                                font-paragraph text-wm-blue
+                                border-2 border-wm-blue
+                                hover:bg-wm-blue hover:text-white
+                                active:bg-wm-blue active:text-white
+                                "
+                                {% if self.button_link %}onclick="location.href='{{ self.button_link.full_url }}'"{% endif %}
+                            >
+                                {% wm_richtext self.button_content 'span' '' %}
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+                {% wm_richtext self.subheading 'p' 'max-w-scree text-xl font-extralight' %}
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 xl:gap-8">
+
+                {% for image in self.gallery %}
+                    <!-- image - start -->
+                    <a class="group h-48 md:h-80 flex items-end bg-gray-100 overflow-hidden rounded-lg shadow-lg relative">
+                        {% image image.image width-800 format-png as img %}
+                        <img
+                                src="{{ img.url }}"
+                                loading="lazy"
+                                class="w-full h-full object-cover object-center absolute inset-0 group-hover:scale-110 transition duration-200"
+                        />
+                    </a>
+                    <!-- image - end -->
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-span-1 md:col-span-2"></div>
+    </div>
+</section>
+
+
+
+
+
