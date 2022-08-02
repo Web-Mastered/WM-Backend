@@ -218,7 +218,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "apikey"
 EMAIL_HOST_PASSWORD = ""
 EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = "wm-portal-noreply@web-mastered.com"
+DEFAULT_FROM_EMAIL = "wm-portal@web-mastered.com"
 
 SENDGRID_API_KEY = ""
 SENDGRID_MARKETING_LIST_ID = "9f80847a-5ffb-4739-9fac-fed9676c3766"
