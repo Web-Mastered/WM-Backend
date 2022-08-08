@@ -432,6 +432,53 @@ class FeatureSpotlight(TwoColumnsHeadingSubHeadingContent):
         label = "Feature Spotlight"
 
 
+class FeatureCards(TwoColumnsHeadingSubHeadingContent):
+    """Heading and subheading at the top, and a list of feature cards"""
+
+    class Feature(StructBlock):
+        fa_icon_name = CharBlock(
+            required=True,
+            verbose_name="Fontawesome Icon Name",
+            help_text="Name of the Font Awesome free icon to be displayed.",
+        )
+        title = RichTextBlock(
+            blank=True,
+            null=True,
+            features=[
+                'emphasis',
+                'italic',
+                'link',
+                'document-link',
+                'code',
+                'superscript',
+                'subscript',
+                'strikethrough',
+            ],
+            verbose_name="Title",
+            help_text="This text will be the title of this feature card.",
+        )
+
+        content = RichTextBlock(
+            blank=True,
+            null=True,
+            verbose_name="Content",
+            help_text="This text will be the contents of this feature block",
+        )
+
+        class Meta:
+            icon = "pick"
+            label = "Feature"
+
+    content = ListBlock(
+        Feature()
+    )
+
+    class Meta:
+        template = "blocks/home/feature_cards.html"
+        icon = "pick"
+        label = "Feature Cards"
+
+
 class CTACardLeftContentRightLargeImage(StructBlock):
     image = ImageChooserBlock(
         required=True,
@@ -622,6 +669,7 @@ homepage_content_blocks = [
     ("homepage_twocolumnsheadingsubheadingcontenttwobuttons", TwoColumnsHeadingSubHeadingContentTwoButtons()),
     ("homepage_twocolumnsheadingsubheadingaccordion", TwoColumnsHeadingSubheadingAccordion()),
     ("homepage_featurespotlight", FeatureSpotlight()),
+    ("homepage_featurecards", FeatureCards()),
     ("homepage_ctacardleftcontentrightlargeimage", CTACardLeftContentRightLargeImage()),
     ("homepage_cardcollection", CardCollection()),
     ("homepage_galleryshowcase", GalleryShowcase()),
